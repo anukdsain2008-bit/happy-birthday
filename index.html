@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Ashiiiii ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: white;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+
+.active {
+    display: flex;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+h1 { font-size: 2em; }
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background: #ff4b7d;
+    color: white;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+/* Typing */
+#message {
+    max-width: 280px;
+    border-right: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    color: pink;
+    animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+    to { transform: translateY(-200px); opacity: 0; }
+}
+
+/* Gallery */
+.slider {
+    width: 90%;
+    max-width: 320px;
+    height: 380px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: 1s;
+}
+
+.activeSlide {
+    opacity: 1;
+}
+
+.controls {
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body onclick="createHeart(event)">
+
+<audio autoplay loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
+
+<!-- Page 1 -->
+<div class="page active" id="page1">
+<h1>🎉 Happy Birthday Ashiiiii ❤️</h1>
+<p>You are my everything 💖</p>
+<button onclick="nextPage()">Next ➡</button>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="page2">
+<h1>💫 My Love</h1>
+<div id="message"></div>
+<button onclick="nextPage()">Next ➡</button>
+</div>
+
+<!-- Page 3 -->
+<div class="page" id="page3">
+<h1>💖 Forever Us</h1>
+<p>I will always stay with you ❤️</p>
+<button onclick="nextPage()">Next ➡</button>
+</div>
+
+<!-- Page 4 (YOUR PHOTOS HERE) -->
+<div class="page" id="page4">
+<h1>📸 Our Memories</h1>
+
+<div class="slider">
+<img src="img1.jpg" class="slide activeSlide">
+<img src="img2.jpg" class="slide">
+<img src="img3.jpg" class="slide">
+</div>
+
+<div class="controls">
+<button onclick="prevSlide()">⬅</button>
+<button onclick="nextSlideFunc()">➡</button>
+</div>
+
+<button onclick="nextPage()">Final ➡</button>
+</div>
+
+<!-- Page 5 -->
+<div class="page" id="page5">
+<h1>🎂 Happy Birthday Ashiiiii 🎉</h1>
+<p>I Love You Forever ❤️</p>
+</div>
+
+<script>
+let currentPage=1;
+
+function nextPage(){
+document.getElementById("page"+currentPage).classList.remove("active");
+currentPage++;
+document.getElementById("page"+currentPage).classList.add("active");
+
+if(currentPage===2)startTyping();
+if(currentPage===5)startConfetti();
+}
+
+/* Typing */
+let text="Every moment with you is special ❤️ I love you so much 💕";
+let i=0;
+function startTyping(){
+let msg=document.getElementById("message");
+function type(){
+if(i<text.length){
+msg.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,50);
+}}
+type();
+}
+
+/* Hearts */
+function createHeart(e){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=e.clientX+"px";
+h.style.top=e.clientY+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),3000);
+}
+
+/* Confetti */
+function startConfetti(){
+for(let i=0;i<70;i++){
+let c=document.createElement("div");
+c.style.position="absolute";
+c.style.width="5px";
+c.style.height="5px";
+c.style.background="hsl("+Math.random()*360+",100%,50%)";
+c.style.left=Math.random()*window.innerWidth+"px";
+c.style.top="-10px";
+c.style.animation="fall 3s linear";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}}
+
+let style=document.createElement("style");
+style.innerHTML=`@keyframes fall{to{transform:translateY(100vh);}}`;
+document.head.appendChild(style);
+
+/* Slider */
+let slides=document.querySelectorAll(".slide");
+let currentSlide=0;
+
+function showSlide(n){
+slides.forEach(s=>s.classList.remove("activeSlide"));
+slides[n].classList.add("activeSlide");
+}
+
+function nextSlideFunc(){
+currentSlide=(currentSlide+1)%slides.length;
+showSlide(currentSlide);
+}
+
+function prevSlide(){
+currentSlide=(currentSlide-1+slides.length)%slides.length;
+showSlide(currentSlide);
+}
+
+setInterval(nextSlideFunc,3000);
+</script>
+
+</body>
+</html>
